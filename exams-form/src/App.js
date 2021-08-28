@@ -17,9 +17,7 @@ const App = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  vertical-align: middle;
   background-color: #f4f4f4;
   overflow-x: hidden;
   height: 100vh;
