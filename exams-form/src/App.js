@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import ExamForm from "./components/ExamForm";
 import Title from "./components/Title";
+import bg from "./images/bg.jpg";
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const Wrapper = styled.div`
   background-color: white;
   overflow-x: hidden;
   height: 100vh;
+  background-image: url(${bg});
+  object-fit: fill;
 `;
 
 export default App;

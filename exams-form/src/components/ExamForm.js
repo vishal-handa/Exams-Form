@@ -16,7 +16,7 @@ const ExamForm = () => {
     ev.preventDefault();
     let newData = { ...Inputs };
     newData.examInfo.push(examDetails);
-    console.log(newData);
+    // console.log(newData);
     setInputs(newData);
   };
 
@@ -27,6 +27,14 @@ const ExamForm = () => {
     newData.examInfo[courseIndex].testInfo.push(tests);
     // console.log(newData);
     setInputs(newData);
+  };
+
+  const handleCourseInput = (ev, courseIndex) => {
+    console.log(ev.target.value, courseIndex);
+    let courseValues = { ...Inputs };
+    courseValues.examInfo[courseIndex].course = ev.target.value;
+    console.log(courseValues);
+    setInputs(courseValues);
   };
 
   return (
@@ -40,13 +48,17 @@ const ExamForm = () => {
           // console.log(course);
           return (
             <CourseContainer>
-              <p>Course {index + 1}</p>
+              <H1>Course {index + 1}</H1>
               <Label htmlFor="course">Course</Label>
-              <Input id="course" />
+              <Input
+                id="course"
+                value={Inputs.examInfo[index].course}
+                onChange={(ev) => handleCourseInput(ev, index)}
+              />
               {course.testInfo.map((test, i) => {
                 return (
                   <TestContainer>
-                    <p>Test {i + 1}</p>
+                    <H2>Test {i + 1}</H2>
                     <Label>Test Start:</Label>
                     <Input type="datetime-local" />
                     <Label>Test End:</Label>
@@ -56,10 +68,12 @@ const ExamForm = () => {
                     <Button onClick={(ev) => handleAddTest(ev, index, i)}>
                       + Add another test
                     </Button>
+                    {/* <Button> - Remove this test</Button> */}
                   </TestContainer>
                 );
               })}
-              <Button onClick={handleAddCourse}>Add another course</Button>
+              <Button onClick={handleAddCourse}> + Add another course</Button>
+              {/* <Button> - Remove this course</Button> */}
             </CourseContainer>
           );
         })}
@@ -71,7 +85,10 @@ const ExamForm = () => {
 
 const Wrapper = styled.div`
   padding: 2rem;
-  width: 70vw;
+  width: 80vw;
+  background-color: white;
+  border-left: 0.25px solid gray;
+  border-right: 0.25px solid gray;
 `;
 
 const Form = styled.form`
@@ -100,13 +117,13 @@ const TestContainer = styled.div`
 `;
 const Label = styled.label`
   font-family: "Montserrat", sans-serif;
-  padding: 5px;
+  padding: 5px 5px 5px 0px;
   font-size: 1em;
 `;
 
 const Input = styled.input`
   width: 50%;
-  margin: 10px 10px 10px 0px;
+  margin: 0px 10px 10px 0px;
 `;
 
 const Button = styled.button`
@@ -116,6 +133,24 @@ const Button = styled.button`
   background-color: #7a1d2e;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
+`;
+
+const H1 = styled.h1`
+  color: #912338;
+  font-size: 2em;
+  text-transform: none;
+  letter-spacing: 1px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 5px;
+`;
+
+const H2 = styled.h2`
+  color: #912338;
+  font-size: 1.5em;
+  text-transform: none;
+  letter-spacing: 1px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 5px;
 `;
 
 export default ExamForm;
