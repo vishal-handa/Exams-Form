@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
-import Form from "./components/Form";
+import ExamForm from "./components/ExamForm";
 import Title from "./components/Title";
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
     <Wrapper>
       <GlobalStyles />
       <Title />
-      <Form />
+      <ExamForm />
     </Wrapper>
   );
 };

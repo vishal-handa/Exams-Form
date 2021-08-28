@@ -4,39 +4,24 @@ import styled from "styled-components";
 const Title = () => {
   return (
     <Wrapper>
-      <h1>Exam INFORMATION Form for COLE</h1>
+      <h1>Exam INFORMATION Form for ACSD</h1>
+      <p>This form gathers high level information for all in-person exams.</p>
+
       <p>
-        This form gathers high level information for all exams you plan to run
-        on COLE. It will take you about 10 minutes to complete.{" "}
+        Please complete this Exam Information Form by 10 days before each exam.
+        If you have missed this date, please contact acsdexam@concordia.ca to
+        check if the exam can be accommodated.
       </p>
 
-      <h2>
-        NOTE: The COLE team is NOT the Exams Office. Both groups have different
-        information needs and collect them separately.{" "}
-      </h2>
-
       <p>
-        Please complete this Exam Information Form by September 10 for Fall
-        2021. If you have missed this date, please contact
-        examsonline@concordia.ca to check if the exam can be accommodated.
-      </p>
-
-      <p>Please complete a separate form for each course you are teaching.</p>
-
-      <p>
-        Whenever you are ready, and at least 14 days before your exam, you must
+        Whenever you are ready, and at least 10 days before your exam, you must
         NECESSARILY complete the Exam Upload Form, with specific details of your
         exam. (http://bit.ly/ColeEUF)
       </p>
 
       <p>
         If, after completing this form, your exam dates or exam information
-        changes, please contact examsonline@concordia.ca as early as possible.
-      </p>
-
-      <p>
-        You can review the entire process for COLE exams on the COLE Faculty
-        Support Site. (https://bit.ly/COLE2Process).
+        changes, please contact acsdexam@concordia.ca as early as possible.
       </p>
     </Wrapper>
   );
