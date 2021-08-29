@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 /.pnp
+# dependencies
+/exams-form/node_modules
+/server/node_modules
 .pnp.js
 
 # testing

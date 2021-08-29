@@ -89,7 +89,6 @@ const ExamForm = () => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    console.log(Inputs);
   };
 
   return (
