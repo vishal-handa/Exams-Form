@@ -24,6 +24,9 @@ const Wrapper = styled.div`
   height: 100vh;
   background-image: url(${bg});
   object-fit: fill;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 export default App;

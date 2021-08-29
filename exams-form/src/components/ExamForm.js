@@ -2,8 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ExamForm = () => {
-  const tests = { startTime: "", endTime: "", instructions: "" };
-  const examDetails = { course: "", testInfo: [tests] };
+  const tests = {
+    examDate: "",
+    startTime: "",
+    endTime: "",
+    instructions: "",
+  };
+  const examDetails = {
+    course: "",
+    testInfo: [tests],
+  };
 
   const [Inputs, setInputs] = useState({
     name: "",
@@ -20,7 +28,7 @@ const ExamForm = () => {
     setInputs(newData);
   };
 
-  const handleAddTest = (ev, courseIndex, testIndex) => {
+  const handleAddTest = (ev, courseIndex) => {
     ev.preventDefault();
     let newData = { ...Inputs };
     // console.log(courseIndex, testIndex);
@@ -30,11 +38,33 @@ const ExamForm = () => {
   };
 
   const handleCourseInput = (ev, courseIndex) => {
-    console.log(ev.target.value, courseIndex);
+    // console.log(ev.target.value, courseIndex);
     let courseValues = { ...Inputs };
     courseValues.examInfo[courseIndex].course = ev.target.value;
-    console.log(courseValues);
+    // console.log(courseValues);
     setInputs(courseValues);
+  };
+
+  const handleDateUpdate = (ev, courseIndex, testIndex) => {
+    // console.log(ev.target.value, courseIndex, testIndex);
+    let dateValues = { ...Inputs };
+    dateValues.examInfo[courseIndex].testInfo[testIndex].examDate =
+      ev.target.value;
+    setInputs(dateValues);
+  };
+
+  const handleStartTimeInput = (ev, courseIndex, testIndex) => {
+    let startTimeValues = { ...Inputs };
+    startTimeValues.examInfo[courseIndex].testInfo[testIndex].startTime =
+      ev.target.value;
+    setInputs(startTimeValues);
+  };
+
+  const handleEndTimeInput = (ev, courseIndex, testIndex) => {
+    let endTimeValues = { ...Inputs };
+    endTimeValues.examInfo[courseIndex].testInfo[testIndex].endTime =
+      ev.target.value;
+    setInputs(endTimeValues);
   };
 
   return (
@@ -59,19 +89,43 @@ const ExamForm = () => {
                 return (
                   <TestContainer>
                     <H2>Test {i + 1}</H2>
+                    <Label>Exam Date</Label>
+                    <Input
+                      type="date"
+                      value={Inputs.examInfo[index].testInfo[i].examDate}
+                      min={Date.now()}
+                      max="2030-12-31"
+                      onChange={(ev) => handleDateUpdate(ev, index, i)}
+                    />
                     <Label>Test Start:</Label>
-                    <Input type="datetime-local" />
+                    <Input
+                      value={Inputs.examInfo[index].testInfo[i].startTime}
+                      type="time"
+                      min="07:00"
+                      max="24:00"
+                      onChange={(ev) => handleStartTimeInput(ev, index, i)}
+                    />
                     <Label>Test End:</Label>
-                    <Input type="datetime-local" />
+                    <Input
+                      type="time"
+                      value={Inputs.examInfo[index].testInfo[i].endTime}
+                      min="07:00"
+                      max="24:00"
+                      onChange={(ev) => handleEndTimeInput(ev, index, i)}
+                    />
                     <Label>Instructions</Label>
-                    <Input type="textarea" />
-                    <Button onClick={(ev) => handleAddTest(ev, index, i)}>
-                      + Add another test
-                    </Button>
-                    {/* <Button> - Remove this test</Button> */}
+                    <Textarea rows="4" cols="50" />
+
+                    <Button> - Remove this test</Button>
                   </TestContainer>
                 );
               })}
+              <Button
+                onClick={(ev) => handleAddTest(ev, index)}
+                style={{ marginLeft: "30px" }}
+              >
+                + Add another test
+              </Button>
               <Button onClick={handleAddCourse}> + Add another course</Button>
               {/* <Button> - Remove this course</Button> */}
             </CourseContainer>
@@ -102,8 +156,8 @@ const CourseContainer = styled.div`
   padding: 20px;
   width: 60vw;
   border-radius: 10px;
-  border: 0.5px solid #d4d4d4;
-  box-shadow: 0px 0px 12px -3px rgba(122, 29, 46, 0.75);
+  /* border: 0.5px solid #d4d4d4; */
+  /* box-shadow: 0px 0px 12px -3px rgba(122, 29, 46, 0.75); */
   margin: 10px;
 `;
 
@@ -126,6 +180,10 @@ const Input = styled.input`
   margin: 0px 10px 10px 0px;
 `;
 
+const Textarea = styled.textarea`
+  margin-bottom: 15px;
+`;
+
 const Button = styled.button`
   width: fit-content;
   padding: 15px;
@@ -133,6 +191,7 @@ const Button = styled.button`
   background-color: #7a1d2e;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
+  margin-bottom: 20px;
 `;
 
 const H1 = styled.h1`
