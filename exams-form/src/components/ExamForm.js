@@ -18,7 +18,20 @@ const ExamForm = () => {
     email: "",
     examInfo: [examDetails],
   });
-  // console.log(Inputs);
+
+  const handleNameInput = (ev) => {
+    let nameValue = { ...Inputs };
+    nameValue.name = ev.target.value;
+    // console.log(courseValues);
+    setInputs(nameValue);
+  };
+
+  const handleEmailInput = (ev) => {
+    let emailValue = { ...Inputs };
+    emailValue.email = ev.target.value;
+    // console.log(courseValues);
+    setInputs(emailValue);
+  };
 
   const handleAddCourse = (ev) => {
     ev.preventDefault();
@@ -67,20 +80,46 @@ const ExamForm = () => {
     setInputs(endTimeValues);
   };
 
+  const handleInstructionsInput = (ev, courseIndex, testIndex) => {
+    let instructionsValues = { ...Inputs };
+    instructionsValues.examInfo[courseIndex].testInfo[testIndex].instructions =
+      ev.target.value;
+    setInputs(instructionsValues);
+  };
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    console.log(Inputs);
+  };
+
   return (
     <Wrapper>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Label htmlFor="name">Name</Label>
-        <Input id="name" />
+        <Input
+          id="name"
+          placeholder="First name and last name"
+          value={Inputs.name}
+          onChange={(ev) => handleNameInput(ev)}
+        />
         <Label htmlFor="email">Email: </Label>
-        <Input id="email" type="email" />
+        <Input
+          id="email"
+          type="email"
+          placeholder="Your email"
+          value={Inputs.email}
+          onChange={(ev) => handleEmailInput(ev)}
+        />
         {Inputs.examInfo.map((course, index) => {
           // console.log(course);
           return (
-            <CourseContainer>
-              <H1>Course {index + 1}</H1>
-              <Label htmlFor="course">Course</Label>
+            <CourseContainer key={"d" + index}>
+              <H1 key={"a" + index}>Course {index + 1}</H1>
+              <Label htmlFor="course" key={"b" + index}>
+                Course
+              </Label>
               <Input
+                key={"c" + index}
                 id="course"
                 value={Inputs.examInfo[index].course}
                 onChange={(ev) => handleCourseInput(ev, index)}
@@ -114,7 +153,13 @@ const ExamForm = () => {
                       onChange={(ev) => handleEndTimeInput(ev, index, i)}
                     />
                     <Label>Instructions</Label>
-                    <Textarea rows="4" cols="50" />
+                    <Textarea
+                      rows="4"
+                      cols="50"
+                      placeholder="Exam instructions, formula sheet, open/close book etc."
+                      value={Inputs.examInfo[index].testInfo[i].instructions}
+                      onChange={(ev) => handleInstructionsInput(ev, index, i)}
+                    />
 
                     <Button style={{ display: i > 0 ? "block" : "none" }}>
                       {" "}
@@ -134,7 +179,7 @@ const ExamForm = () => {
             </CourseContainer>
           );
         })}
-        <Button>Submit</Button>
+        <Button type="submit">Submit</Button>
       </Form>
     </Wrapper>
   );
@@ -187,7 +232,8 @@ const Input = styled.input`
 
 const Textarea = styled.textarea`
   margin-bottom: 15px;
-  width: 500px;
+  max-width: 500px;
+
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
 `;
