@@ -116,7 +116,10 @@ const ExamForm = () => {
                     <Label>Instructions</Label>
                     <Textarea rows="4" cols="50" />
 
-                    <Button> - Remove this test</Button>
+                    <Button style={{ display: i > 0 ? "block" : "none" }}>
+                      {" "}
+                      - Remove this test
+                    </Button>
                   </TestContainer>
                 );
               })}
@@ -178,10 +181,15 @@ const Label = styled.label`
 const Input = styled.input`
   width: 50%;
   margin: 0px 10px 10px 0px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
 `;
 
 const Textarea = styled.textarea`
   margin-bottom: 15px;
+  width: 500px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
 `;
 
 const Button = styled.button`
