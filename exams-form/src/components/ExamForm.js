@@ -89,6 +89,17 @@ const ExamForm = () => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+    fetch("/send-tests", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(Inputs),
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (

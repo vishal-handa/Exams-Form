@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const { handleTestSubmission } = require("./handlers");
 
 const PORT = 4000;
 
@@ -25,5 +26,6 @@ express()
   .use("/", express.static(__dirname + "/"))
 
   // REST endpoints:
+  .post("/send-tests", handleTestSubmission)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
