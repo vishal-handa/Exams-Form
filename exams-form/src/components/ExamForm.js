@@ -262,14 +262,18 @@ const Input = styled.input`
   margin: 0px 10px 10px 0px;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
+  padding: 5px;
+  border: 0.5px solid #cfcfcf;
+  border-radius: 5px;
 `;
 
 const Textarea = styled.textarea`
   margin-bottom: 15px;
   max-width: 500px;
-
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
+  border: 0.5px solid #cfcfcf;
+  border-radius: 5px;
 `;
 
 const Button = styled.button`
