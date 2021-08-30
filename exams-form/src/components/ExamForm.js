@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const ExamForm = () => {
+  let resArray = [];
   const tests = {
     examDate: "",
     startTime: "",
@@ -89,17 +91,39 @@ const ExamForm = () => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    fetch("/send-tests", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(Inputs),
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    Inputs.examInfo.forEach((elem) => {
+      return elem.testInfo.forEach((el) => {
+        return resArray.push({
+          timestamp: new Date(Date.now()).toString(),
+          name: Inputs.name,
+          email: Inputs.email,
+          course: elem.course,
+          examDate: el.examDate,
+          startTime: el.startTime,
+          endTime: el.endTime,
+          instructions: el.instructions,
+        });
+      });
+    });
+
+    axios
+      .post(
+        "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
+        resArray
+      )
+      .then((res) => console.log(res));
+
+    // fetch("/send-tests", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(Inputs),
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   return (
