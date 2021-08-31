@@ -105,13 +105,13 @@ const ExamForm = () => {
         });
       });
     });
-
-    axios
-      .post(
-        "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
-        resArray
-      )
-      .then((res) => console.log(res));
+    console.log(resArray);
+    // axios
+    //   .post(
+    //     "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
+    //     resArray
+    //   )
+    //   .then((res) => console.log(res));
 
     // fetch("/send-tests", {
     //   method: "POST",
