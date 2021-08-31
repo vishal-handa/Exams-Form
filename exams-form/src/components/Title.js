@@ -39,8 +39,7 @@ const Wrapper = styled.div`
   h2 {
     font-family: "Montserrat", sans-serif;
   }
-  padding: 2rem;
-  width: 80vw;
+  padding: 1rem;
 `;
 
 export default Title;

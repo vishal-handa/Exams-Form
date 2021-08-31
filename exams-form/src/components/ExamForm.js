@@ -129,21 +129,28 @@ const ExamForm = () => {
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit}>
-        <Label htmlFor="name">Name</Label>
-        <Input
-          id="name"
-          placeholder="First name and last name"
-          value={Inputs.name}
-          onChange={(ev) => handleNameInput(ev)}
-        />
-        <Label htmlFor="email">Email: </Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="Your email"
-          value={Inputs.email}
-          onChange={(ev) => handleEmailInput(ev)}
-        />
+        <RowContainer>
+          <ColumnContainer>
+            <Label htmlFor="name">Name: </Label>
+            <Input
+              id="name"
+              placeholder="First name and last name"
+              value={Inputs.name}
+              onChange={(ev) => handleNameInput(ev)}
+            />
+          </ColumnContainer>
+          <ColumnContainer>
+            <Label htmlFor="email">Email: </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="Your email"
+              value={Inputs.email}
+              onChange={(ev) => handleEmailInput(ev)}
+            />
+          </ColumnContainer>
+        </RowContainer>
+
         {Inputs.examInfo.map((course, index) => {
           // console.log(course);
           return (
@@ -155,53 +162,86 @@ const ExamForm = () => {
               <Input
                 key={"c" + index}
                 id="course"
+                style={{ width: "300px" }}
                 value={Inputs.examInfo[index].course}
                 onChange={(ev) => handleCourseInput(ev, index)}
               />
-              {course.testInfo.map((test, i) => {
-                return (
-                  <TestContainer>
-                    <H2>Test {i + 1}</H2>
-                    <Label>Exam Date</Label>
-                    <Input
-                      type="date"
-                      value={Inputs.examInfo[index].testInfo[i].examDate}
-                      min={Date.now()}
-                      max="2030-12-31"
-                      onChange={(ev) => handleDateUpdate(ev, index, i)}
-                    />
-                    <Label>Test Start:</Label>
-                    <Input
-                      value={Inputs.examInfo[index].testInfo[i].startTime}
-                      type="time"
-                      min="07:00"
-                      max="24:00"
-                      onChange={(ev) => handleStartTimeInput(ev, index, i)}
-                    />
-                    <Label>Test End:</Label>
-                    <Input
-                      type="time"
-                      value={Inputs.examInfo[index].testInfo[i].endTime}
-                      min="07:00"
-                      max="24:00"
-                      onChange={(ev) => handleEndTimeInput(ev, index, i)}
-                    />
-                    <Label>Instructions</Label>
-                    <Textarea
-                      rows="4"
-                      cols="50"
-                      placeholder="Exam instructions, formula sheet, open/close book etc."
-                      value={Inputs.examInfo[index].testInfo[i].instructions}
-                      onChange={(ev) => handleInstructionsInput(ev, index, i)}
-                    />
+              <table>
+                <thead>
+                  <tr>
+                    <th />
+                    <th />
+                    <th />
+                    <th />
+                    <th />
+                  </tr>
+                </thead>
 
-                    <Button style={{ display: i > 0 ? "block" : "none" }}>
-                      {" "}
-                      - Remove this test
-                    </Button>
-                  </TestContainer>
-                );
-              })}
+                {course.testInfo.map((test, i) => {
+                  return (
+                    <TestContainer>
+                      <tr>
+                        <H2>Test {i + 1}</H2>
+                      </tr>
+                      <tr>
+                        <td>
+                          <Label>Exam Date</Label>
+                          <p />
+                          <Input
+                            type="date"
+                            value={Inputs.examInfo[index].testInfo[i].examDate}
+                            min={Date.now()}
+                            max="2030-12-31"
+                            onChange={(ev) => handleDateUpdate(ev, index, i)}
+                          />
+                        </td>
+                        <td>
+                          <Label>Test Start:</Label>
+                          <p />
+                          <Input
+                            value={Inputs.examInfo[index].testInfo[i].startTime}
+                            type="time"
+                            min="07:00"
+                            max="24:00"
+                            onChange={(ev) =>
+                              handleStartTimeInput(ev, index, i)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <Label>Test End:</Label>
+                          <p></p>
+                          <Input
+                            type="time"
+                            value={Inputs.examInfo[index].testInfo[i].endTime}
+                            min="07:00"
+                            max="24:00"
+                            onChange={(ev) => handleEndTimeInput(ev, index, i)}
+                          />
+                        </td>
+                        <td>
+                          <Label>Instructions</Label>
+                          <p />
+                          <Textarea
+                            rows="3"
+                            cols="25"
+                            placeholder="Exam instructions, formula sheet, open/close book etc."
+                            value={
+                              Inputs.examInfo[index].testInfo[i].instructions
+                            }
+                            onChange={(ev) =>
+                              handleInstructionsInput(ev, index, i)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <br /> <Button>Remove test</Button>
+                        </td>
+                      </tr>
+                    </TestContainer>
+                  );
+                })}
+              </table>
               <Button
                 onClick={(ev) => handleAddTest(ev, index)}
                 style={{ marginLeft: "30px" }}
@@ -220,8 +260,7 @@ const ExamForm = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 2rem;
-  width: 80vw;
+  padding: 1rem;
   background-color: white;
   border-left: 0.25px solid gray;
   border-right: 0.25px solid gray;
@@ -232,24 +271,48 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
+const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-inline-end: 20px;
+`;
+
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  /* input {
+    width: 100%;
+  } */
+`;
 const CourseContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  width: 60vw;
+  padding: 20px 0px 0px 20px;
   border-radius: 10px;
-  /* border: 0.5px solid #d4d4d4; */
-  /* box-shadow: 0px 0px 12px -3px rgba(122, 29, 46, 0.75); */
   margin: 10px;
+  width: 100%;
+  table {
+    border: none;
+    /* width: 100%; */
+    td,
+    tr,
+    th {
+      border-bottom: none;
+      /* outline: none; */
+      /* margin: auto; */
+      /* padding: 10px; */
+    }
+  }
 `;
 
 const TestContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50vw;
-  padding: 20px;
+  padding-left: 10px;
   border-radius: 10px;
   margin: 10px;
+  width: inherit;
 `;
 const Label = styled.label`
   font-family: "Montserrat", sans-serif;
@@ -259,12 +322,13 @@ const Label = styled.label`
 
 const Input = styled.input`
   width: 50%;
-  margin: 0px 10px 10px 0px;
+  /* margin: 10px; */
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   padding: 5px;
   border: 0.5px solid #cfcfcf;
   border-radius: 5px;
+  width: inherit;
 `;
 
 const Textarea = styled.textarea`
@@ -278,12 +342,12 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   width: fit-content;
-  padding: 15px;
+  padding: 10px;
   color: white;
   background-color: #7a1d2e;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  margin-bottom: 20px;
+  margin: 10px;
 `;
 
 const H1 = styled.h1`

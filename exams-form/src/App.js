@@ -5,8 +5,6 @@ import Confirmation from "./components/Confirmation";
 import Home from "./components/Home";
 import GlobalStyles from "./GlobalStyles";
 
-import bg from "./images/bg.jpg";
-
 const App = () => {
   return (
     <Wrapper>
@@ -29,14 +27,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: #f4f4f4;
   overflow-x: hidden;
   height: 100vh;
-  background-image: url(${bg});
-  object-fit: fill;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  width: 100vw;
 `;
 
 export default App;
