@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Table from "react-bootstrap/Table";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ExamForm = () => {
   let resArray = [];
@@ -166,7 +168,7 @@ const ExamForm = () => {
                 value={Inputs.examInfo[index].course}
                 onChange={(ev) => handleCourseInput(ev, index)}
               />
-              <table>
+              <Table responsive="lg">
                 <thead>
                   <tr>
                     <th />
@@ -241,7 +243,7 @@ const ExamForm = () => {
                     </TestContainer>
                   );
                 })}
-              </table>
+              </Table>
               <Button
                 onClick={(ev) => handleAddTest(ev, index)}
                 style={{ marginLeft: "30px" }}
@@ -262,8 +264,8 @@ const ExamForm = () => {
 const Wrapper = styled.div`
   padding: 1rem;
   background-color: white;
-  border-left: 0.25px solid gray;
-  border-right: 0.25px solid gray;
+  /* border-left: 0.25px solid gray;
+  border-right: 0.25px solid gray; */
 `;
 
 const Form = styled.form`
@@ -281,25 +283,26 @@ const ColumnContainer = styled.div`
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
-  /* input {
-    width: 100%;
-  } */
 `;
 const CourseContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0px 0px 20px;
+  padding: 20px;
   border-radius: 10px;
   margin: 10px;
   width: 100%;
   table {
     border: none;
     /* width: 100%; */
+    table > thead > tr > th {
+      border-bottom: none;
+    }
     td,
     tr,
-    th {
-      border-bottom: none;
-      /* outline: none; */
+    th,
+    thead {
+      border: none;
+      outline: none;
       /* margin: auto; */
       /* padding: 10px; */
     }
@@ -309,7 +312,7 @@ const CourseContainer = styled.div`
 const TestContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
+  padding: 10px;
   border-radius: 10px;
   margin: 10px;
   width: inherit;
@@ -328,7 +331,7 @@ const Input = styled.input`
   padding: 5px;
   border: 0.5px solid #cfcfcf;
   border-radius: 5px;
-  width: inherit;
+  width: 90%;
 `;
 
 const Textarea = styled.textarea`
@@ -359,7 +362,7 @@ const H1 = styled.h1`
   margin-bottom: 5px;
 `;
 
-const H2 = styled.h2`
+const H2 = styled.p`
   color: #912338;
   font-size: 1.5em;
   text-transform: none;
