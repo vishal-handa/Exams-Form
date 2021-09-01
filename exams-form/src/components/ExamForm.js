@@ -14,6 +14,8 @@ const ExamForm = () => {
   };
   const examDetails = {
     course: "",
+    number: "",
+    section: "",
     testInfo: [tests],
   };
 
@@ -62,6 +64,22 @@ const ExamForm = () => {
     setInputs(courseValues);
   };
 
+  const handleNumberInput = (ev, courseIndex) => {
+    // console.log(ev.target.value, courseIndex);
+    let numberValues = { ...Inputs };
+    numberValues.examInfo[courseIndex].number = ev.target.value;
+    // console.log(courseValues);
+    setInputs(numberValues);
+  };
+
+  const handleSectionInput = (ev, courseIndex) => {
+    // console.log(ev.target.value, courseIndex);
+    let sectionValues = { ...Inputs };
+    sectionValues.examInfo[courseIndex].section = ev.target.value;
+    // console.log(courseValues);
+    setInputs(sectionValues);
+  };
+
   const handleDateUpdate = (ev, courseIndex, testIndex) => {
     // console.log(ev.target.value, courseIndex, testIndex);
     let dateValues = { ...Inputs };
@@ -99,7 +117,7 @@ const ExamForm = () => {
           timestamp: new Date(Date.now()).toString(),
           name: Inputs.name,
           email: Inputs.email,
-          course: elem.course,
+          course: elem.course + " " + elem.number + " " + elem.section,
           examDate: el.examDate,
           startTime: el.startTime,
           endTime: el.endTime,
@@ -108,12 +126,12 @@ const ExamForm = () => {
       });
     });
     console.log(resArray);
-    // axios
-    //   .post(
-    //     "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
-    //     resArray
-    //   )
-    //   .then((res) => console.log(res));
+    axios
+      .post(
+        "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
+        resArray
+      )
+      .then((res) => console.log(res));
 
     // fetch("/send-tests", {
     //   method: "POST",
@@ -158,17 +176,38 @@ const ExamForm = () => {
           return (
             <CourseContainer key={"d" + index}>
               <H1 key={"a" + index}>Course {index + 1}</H1>
-              <Label htmlFor="course" key={"b" + index}>
-                Course
-              </Label>
-              <Input
-                key={"c" + index}
-                id="course"
-                style={{ width: "300px" }}
-                value={Inputs.examInfo[index].course}
-                onChange={(ev) => handleCourseInput(ev, index)}
-              />
-              <Table responsive="lg">
+              <RowContainer>
+                <ColumnContainer>
+                  <Label htmlFor="course" key={"b" + index}>
+                    Course Code:
+                  </Label>
+                  <Input
+                    key={"c" + index}
+                    id="course"
+                    value={Inputs.examInfo[index].course}
+                    onChange={(ev) => handleCourseInput(ev, index)}
+                  />
+                </ColumnContainer>
+                <ColumnContainer>
+                  <Label>Course Number:</Label>
+                  <Input
+                    value={Inputs.examInfo[index].number}
+                    onChange={(ev) => handleNumberInput(ev, index)}
+                  />
+                </ColumnContainer>
+                <ColumnContainer>
+                  <Label>Section:</Label>
+                  <Input
+                    value={Inputs.examInfo[index].section}
+                    onChange={(ev) => handleSectionInput(ev, index)}
+                  />
+                </ColumnContainer>
+              </RowContainer>
+              <Table
+                responsive="xl"
+                size="sm"
+                style={{ width: "100% !important" }}
+              >
                 <thead>
                   <tr>
                     <th />
@@ -289,32 +328,32 @@ const CourseContainer = styled.div`
   flex-direction: column;
   padding: 20px;
   border-radius: 10px;
-  margin: 10px;
+  margin-left: 10px;
   width: 100%;
-  table {
+  .table > thead > tr > th {
+    border-bottom: none !important;
+  }
+  .table {
+    width: 100% !important;
+  }
+  td {
+    width: 25% !important;
+  }
+  td,
+  tr,
+  th,
+  thead {
     border: none;
-    /* width: 100%; */
-    table > thead > tr > th {
-      border-bottom: none;
-    }
-    td,
-    tr,
-    th,
-    thead {
-      border: none;
-      outline: none;
-      /* margin: auto; */
-      /* padding: 10px; */
-    }
+    outline: none;
   }
 `;
 
 const TestContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 10px;
-  margin: 10px;
+  margin-left: 10px;
   width: inherit;
 `;
 const Label = styled.label`
