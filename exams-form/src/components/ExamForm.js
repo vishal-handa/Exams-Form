@@ -3,9 +3,11 @@ import styled from "styled-components";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useHistory } from "react-router-dom";
 
 const ExamForm = () => {
   let resArray = [];
+  const history = useHistory();
   const tests = {
     examDate: "",
     startTime: "",
@@ -131,7 +133,13 @@ const ExamForm = () => {
         "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
         resArray
       )
-      .then((res) => console.log(res));
+      .then((res) => {
+        if (res.status === 200) {
+          history.push("/confirmation");
+        } else {
+          window.alert("Error in submission! Please try again.");
+        }
+      });
 
     // fetch("/send-tests", {
     //   method: "POST",
