@@ -11,6 +11,7 @@ import Select from "react-select";
 
 const ExamForm = () => {
   let resArray = [];
+  const [courseError, setCourseError] = useState(false);
   const history = useHistory();
   const tests = {
     examDate: "",
@@ -75,6 +76,7 @@ const ExamForm = () => {
       courseValues.examInfo[courseIndex].course = "";
       // console.log(courseValues);
       setInputs(courseValues);
+      setCourseError(true);
     }
   };
 
@@ -117,6 +119,7 @@ const ExamForm = () => {
   };
 
   const handleInstructionsInput = (ev, courseIndex, testIndex) => {
+    // console.log(ev);
     let instructionsValues = { ...Inputs };
     instructionsValues.examInfo[courseIndex].testInfo[testIndex].instructions =
       ev.target.value;
@@ -139,7 +142,8 @@ const ExamForm = () => {
         });
       });
     });
-    console.log(resArray);
+    console.log(courseError);
+
     axios
       .post(
         "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
@@ -147,7 +151,8 @@ const ExamForm = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          history.push("/confirmation");
+          // history.push("/confirmation");
+          setCourseError(false);
         } else {
           window.alert("Error in submission! Please try again.");
         }
@@ -196,15 +201,13 @@ const ExamForm = () => {
         {Inputs.examInfo.map((course, index) => {
           // console.log(course);
           return (
-            <CourseContainer key={makeid(5)}>
-              <H1 key={makeid(5)}>Course {index + 1}</H1>
+            <CourseContainer key={index}>
+              <H1>Course {index + 1}</H1>
               <RowContainer>
                 <ColumnContainer style={{ width: "20%" }}>
-                  <Label htmlFor="course" key={makeid(5)}>
-                    Course Code:
-                  </Label>
+                  <Label htmlFor="course">Course Code:</Label>
                   {/* <Input
-                    key={makeid(5)}
+                    
                     id="course"
                     maxLength="4"
                     value={Inputs.examInfo[index].course}
@@ -216,6 +219,7 @@ const ExamForm = () => {
                     value={{ label: Inputs.examInfo[index].course }}
                     onChange={(ev) => handleCourseInput(ev, index)}
                     defaultValue={Inputs.examInfo[index].course}
+                    required
                     isSearchable={true}
                     // isLoading={true}
                     isClearable={true}
@@ -223,11 +227,11 @@ const ExamForm = () => {
                   />
                 </ColumnContainer>
                 {/* <ColumnContainer>
-                  <Label htmlFor="course" key={makeid(5)}>
+                  <Label htmlFor="course" >
                     Course Code:
                   </Label>
                   <Input
-                    key={makeid(5)}
+                    
                     id="course"
                     maxLength="4"
                     value={Inputs.examInfo[index].course}
@@ -236,9 +240,9 @@ const ExamForm = () => {
                   />
                 </ColumnContainer>
                 <ColumnContainer>
-                  <Label key={makeid(5)}>Course Number:</Label>
+                  <Label >Course Number:</Label>
                   <Input
-                    key={makeid(5)}
+                    
                     maxLength="4"
                     value={Inputs.examInfo[index].number}
                     onChange={(ev) => handleNumberInput(ev, index)}
@@ -246,9 +250,9 @@ const ExamForm = () => {
                   />
                 </ColumnContainer>
                 <ColumnContainer>
-                  <Label key={makeid(5)}>Section:</Label>
+                  <Label >Section:</Label>
                   <Input
-                    key={makeid(5)}
+                    
                     maxLength="3"
                     required
                     value={Inputs.examInfo[index].section}
@@ -283,14 +287,14 @@ const ExamForm = () => {
 
                 {course.testInfo.map((test, i) => {
                   return (
-                    <TestContainer key={makeid(5)}>
+                    <TestContainer key={(index, i)}>
                       <tr>
                         <H2>Test {i + 1}</H2>
                       </tr>
                       <tr>
                         <td>
                           <Label>Exam Date</Label>
-                          <p />
+                          <br />{" "}
                           <Input
                             type="date"
                             value={Inputs.examInfo[index].testInfo[i].examDate}
@@ -302,7 +306,7 @@ const ExamForm = () => {
                         </td>
                         <td>
                           <Label>Test Start:</Label>
-                          <p />
+                          <br />{" "}
                           <Input
                             value={Inputs.examInfo[index].testInfo[i].startTime}
                             type="time"
@@ -316,7 +320,7 @@ const ExamForm = () => {
                         </td>
                         <td>
                           <Label>Test End:</Label>
-                          <p></p>
+                          <br />{" "}
                           <Input
                             type="time"
                             value={Inputs.examInfo[index].testInfo[i].endTime}
@@ -328,18 +332,17 @@ const ExamForm = () => {
                         </td>
                         <td>
                           <Label>Instructions</Label>
-                          <p />
+                          <br />{" "}
                           <Textarea
-                            rows="3"
-                            cols="25"
+                            rows="4"
+                            cols="30"
                             placeholder="Exam instructions, formula sheet, open/close book etc."
-                            value={
+                            defaultValue={
                               Inputs.examInfo[index].testInfo[i].instructions
                             }
                             onChange={(ev) =>
                               handleInstructionsInput(ev, index, i)
                             }
-                            required
                           />
                         </td>
                         <td>
