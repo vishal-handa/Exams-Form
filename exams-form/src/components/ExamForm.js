@@ -50,16 +50,16 @@ const ExamForm = () => {
     ev.preventDefault();
     let newData = { ...Inputs };
     newData.examInfo.push(examDetails);
-    // console.log(newData);
+    console.log(newData);
     setInputs(newData);
   };
 
   const handleAddTest = (ev, courseIndex) => {
     ev.preventDefault();
     let newData = { ...Inputs };
-    // console.log(courseIndex, testIndex);
+    console.log(courseIndex);
     newData.examInfo[courseIndex].testInfo.push(tests);
-    // console.log(newData);
+    console.log(newData);
     setInputs(newData);
   };
 
@@ -287,7 +287,7 @@ const ExamForm = () => {
 
                 {course.testInfo.map((test, i) => {
                   return (
-                    <TestContainer key={(index, i)}>
+                    <TestContainer key={i}>
                       <tr>
                         <H2>Test {i + 1}</H2>
                       </tr>
