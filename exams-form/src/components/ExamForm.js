@@ -249,7 +249,13 @@ const ExamForm = () => {
                 </ColumnContainer> */}
                 <ColumnContainer>
                   <br />
-                  <Button> - Remove this course</Button>
+                  <Button
+                    style={{
+                      visibility: index > 0 ? "visibile" : "hidden",
+                    }}
+                  >
+                    Remove this course
+                  </Button>
                 </ColumnContainer>
               </RowContainer>
               <Table
@@ -329,7 +335,14 @@ const ExamForm = () => {
                           />
                         </td>
                         <td>
-                          <br /> <Button>Remove test</Button>
+                          <br />{" "}
+                          <Button
+                            style={{
+                              visibility: i > 0 ? "visibile" : "hidden",
+                            }}
+                          >
+                            Remove test
+                          </Button>
                         </td>
                       </tr>
                     </TestContainer>
