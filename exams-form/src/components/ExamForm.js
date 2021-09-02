@@ -4,7 +4,10 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useHistory } from "react-router-dom";
-import { timeDurationCheck } from "./helpers/timecheck";
+// import { timeDurationCheck } from "./helpers/timecheck";
+import makeid from "./helpers/makeid";
+import courseList from "./helpers/courseList";
+import Select from "react-select";
 
 const ExamForm = () => {
   let resArray = [];
@@ -60,28 +63,28 @@ const ExamForm = () => {
   };
 
   const handleCourseInput = (ev, courseIndex) => {
-    // console.log(ev.target.value, courseIndex);
+    // console.log(ev.label, courseIndex);
     let courseValues = { ...Inputs };
-    courseValues.examInfo[courseIndex].course = ev.target.value;
+    courseValues.examInfo[courseIndex].course = ev.label;
     // console.log(courseValues);
     setInputs(courseValues);
   };
 
-  const handleNumberInput = (ev, courseIndex) => {
-    // console.log(ev.target.value, courseIndex);
-    let numberValues = { ...Inputs };
-    numberValues.examInfo[courseIndex].number = ev.target.value;
-    // console.log(courseValues);
-    setInputs(numberValues);
-  };
+  // const handleNumberInput = (ev, courseIndex) => {
+  //   // console.log(ev.target.value, courseIndex);
+  //   let numberValues = { ...Inputs };
+  //   numberValues.examInfo[courseIndex].number = ev.target.value;
+  //   // console.log(courseValues);
+  //   setInputs(numberValues);
+  // };
 
-  const handleSectionInput = (ev, courseIndex) => {
-    // console.log(ev.target.value, courseIndex);
-    let sectionValues = { ...Inputs };
-    sectionValues.examInfo[courseIndex].section = ev.target.value;
-    // console.log(courseValues);
-    setInputs(sectionValues);
-  };
+  // const handleSectionInput = (ev, courseIndex) => {
+  //   // console.log(ev.target.value, courseIndex);
+  //   let sectionValues = { ...Inputs };
+  //   sectionValues.examInfo[courseIndex].section = ev.target.value;
+  //   // console.log(courseValues);
+  //   setInputs(sectionValues);
+  // };
 
   const handleDateUpdate = (ev, courseIndex, testIndex) => {
     // console.log(ev.target.value, courseIndex, testIndex);
@@ -120,7 +123,7 @@ const ExamForm = () => {
           timestamp: new Date(Date.now()).toString(),
           name: Inputs.name,
           email: Inputs.email,
-          course: elem.course + " " + elem.number + " " + elem.section,
+          course: elem.course,
           examDate: el.examDate,
           startTime: el.startTime,
           endTime: el.endTime,
@@ -185,15 +188,38 @@ const ExamForm = () => {
         {Inputs.examInfo.map((course, index) => {
           // console.log(course);
           return (
-            <CourseContainer key={"d" + index}>
-              <H1 key={"a" + index}>Course {index + 1}</H1>
+            <CourseContainer key={makeid(5)}>
+              <H1 key={makeid(5)}>Course {index + 1}</H1>
               <RowContainer>
-                <ColumnContainer>
-                  <Label htmlFor="course" key={"b" + index}>
+                <ColumnContainer style={{ width: "20%" }}>
+                  <Label htmlFor="course" key={makeid(5)}>
+                    Course Code:
+                  </Label>
+                  {/* <Input
+                    key={makeid(5)}
+                    id="course"
+                    maxLength="4"
+                    value={Inputs.examInfo[index].course}
+                    onChange={(ev) => handleCourseInput(ev, index)}
+                    required
+                  /> */}
+                  <Select
+                    options={courseList}
+                    value={{ label: Inputs.examInfo[index].course }}
+                    onChange={(ev) => handleCourseInput(ev, index)}
+                    defaultValue={Inputs.examInfo[index].course}
+                    isSearchable={true}
+                    // isLoading={true}
+                    // isClearable={true}
+                    // width="300px"
+                  />
+                </ColumnContainer>
+                {/* <ColumnContainer>
+                  <Label htmlFor="course" key={makeid(5)}>
                     Course Code:
                   </Label>
                   <Input
-                    key={"c" + index}
+                    key={makeid(5)}
                     id="course"
                     maxLength="4"
                     value={Inputs.examInfo[index].course}
@@ -202,8 +228,9 @@ const ExamForm = () => {
                   />
                 </ColumnContainer>
                 <ColumnContainer>
-                  <Label>Course Number:</Label>
+                  <Label key={makeid(5)}>Course Number:</Label>
                   <Input
+                    key={makeid(5)}
                     maxLength="4"
                     value={Inputs.examInfo[index].number}
                     onChange={(ev) => handleNumberInput(ev, index)}
@@ -211,13 +238,18 @@ const ExamForm = () => {
                   />
                 </ColumnContainer>
                 <ColumnContainer>
-                  <Label>Section:</Label>
+                  <Label key={makeid(5)}>Section:</Label>
                   <Input
+                    key={makeid(5)}
                     maxLength="3"
                     required
                     value={Inputs.examInfo[index].section}
                     onChange={(ev) => handleSectionInput(ev, index)}
                   />
+                </ColumnContainer> */}
+                <ColumnContainer>
+                  <br />
+                  <Button> - Remove this course</Button>
                 </ColumnContainer>
               </RowContainer>
               <Table
@@ -237,7 +269,7 @@ const ExamForm = () => {
 
                 {course.testInfo.map((test, i) => {
                   return (
-                    <TestContainer>
+                    <TestContainer key={makeid(5)}>
                       <tr>
                         <H2>Test {i + 1}</H2>
                       </tr>
@@ -308,13 +340,14 @@ const ExamForm = () => {
                 onClick={(ev) => handleAddTest(ev, index)}
                 style={{ marginLeft: "30px" }}
               >
-                + Add another test
+                Add another test
               </Button>
-              <Button onClick={handleAddCourse}> + Add another course</Button>
-              {/* <Button> - Remove this course</Button> */}
             </CourseContainer>
           );
         })}
+        <Button onClick={handleAddCourse} style={{ marginLeft: "40px" }}>
+          Add another course
+        </Button>
         <Button type="submit">Submit</Button>
       </Form>
     </Wrapper>
@@ -338,11 +371,19 @@ const ColumnContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   margin-inline-end: 20px;
+  /* :nth-child(4) {
+    position: relative;
+    right: 0;
+  } */
 `;
 
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
+  :nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 const CourseContainer = styled.div`
   display: flex;
