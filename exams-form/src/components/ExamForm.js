@@ -4,6 +4,7 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useHistory } from "react-router-dom";
+import { timeDurationCheck } from "./helpers/timecheck";
 
 const ExamForm = () => {
   let resArray = [];
@@ -165,6 +166,7 @@ const ExamForm = () => {
               placeholder="First name and last name"
               value={Inputs.name}
               onChange={(ev) => handleNameInput(ev)}
+              required
             />
           </ColumnContainer>
           <ColumnContainer>
@@ -175,6 +177,7 @@ const ExamForm = () => {
               placeholder="Your email"
               value={Inputs.email}
               onChange={(ev) => handleEmailInput(ev)}
+              required
             />
           </ColumnContainer>
         </RowContainer>
@@ -192,20 +195,26 @@ const ExamForm = () => {
                   <Input
                     key={"c" + index}
                     id="course"
+                    maxLength="4"
                     value={Inputs.examInfo[index].course}
                     onChange={(ev) => handleCourseInput(ev, index)}
+                    required
                   />
                 </ColumnContainer>
                 <ColumnContainer>
                   <Label>Course Number:</Label>
                   <Input
+                    maxLength="4"
                     value={Inputs.examInfo[index].number}
                     onChange={(ev) => handleNumberInput(ev, index)}
+                    required
                   />
                 </ColumnContainer>
                 <ColumnContainer>
                   <Label>Section:</Label>
                   <Input
+                    maxLength="3"
+                    required
                     value={Inputs.examInfo[index].section}
                     onChange={(ev) => handleSectionInput(ev, index)}
                   />
@@ -242,6 +251,7 @@ const ExamForm = () => {
                             min={Date.now()}
                             max="2030-12-31"
                             onChange={(ev) => handleDateUpdate(ev, index, i)}
+                            required
                           />
                         </td>
                         <td>
@@ -255,6 +265,7 @@ const ExamForm = () => {
                             onChange={(ev) =>
                               handleStartTimeInput(ev, index, i)
                             }
+                            required
                           />
                         </td>
                         <td>
@@ -266,6 +277,7 @@ const ExamForm = () => {
                             min="07:00"
                             max="24:00"
                             onChange={(ev) => handleEndTimeInput(ev, index, i)}
+                            required
                           />
                         </td>
                         <td>
@@ -281,6 +293,7 @@ const ExamForm = () => {
                             onChange={(ev) =>
                               handleInstructionsInput(ev, index, i)
                             }
+                            required
                           />
                         </td>
                         <td>
