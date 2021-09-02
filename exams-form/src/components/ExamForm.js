@@ -20,8 +20,8 @@ const ExamForm = () => {
   };
   const examDetails = {
     course: "",
-    number: "",
-    section: "",
+    // number: "",
+    // section: "",
     testInfo: [tests],
   };
 
@@ -63,11 +63,19 @@ const ExamForm = () => {
   };
 
   const handleCourseInput = (ev, courseIndex) => {
-    // console.log(ev.label, courseIndex);
-    let courseValues = { ...Inputs };
-    courseValues.examInfo[courseIndex].course = ev.label;
-    // console.log(courseValues);
-    setInputs(courseValues);
+    if (ev) {
+      // console.log(ev);
+      let courseValues = { ...Inputs };
+      courseValues.examInfo[courseIndex].course = ev.label;
+      // console.log(courseValues);
+      setInputs(courseValues);
+    } else if (ev === null) {
+      // console.log(ev);
+      let courseValues = { ...Inputs };
+      courseValues.examInfo[courseIndex].course = "";
+      // console.log(courseValues);
+      setInputs(courseValues);
+    }
   };
 
   // const handleNumberInput = (ev, courseIndex) => {
@@ -210,7 +218,7 @@ const ExamForm = () => {
                     defaultValue={Inputs.examInfo[index].course}
                     isSearchable={true}
                     // isLoading={true}
-                    // isClearable={true}
+                    isClearable={true}
                     // width="300px"
                   />
                 </ColumnContainer>
