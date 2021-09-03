@@ -41,7 +41,7 @@ const ExamForm = () => {
   const handleAddTest = (ev, courseIndex) => {
     ev.preventDefault();
     let newData = { ...Inputs };
-    console.log(courseIndex);
+    // console.log(courseIndex);
     newData.examInfo.push(examDetails);
     // console.log(newData);
     setInputs(newData);
@@ -58,7 +58,6 @@ const ExamForm = () => {
         }
         return obj;
       });
-      // console.log(updatedState)
       setInputs({ ...Inputs, examInfo: updatedState });
     }
   };
@@ -115,6 +114,15 @@ const ExamForm = () => {
     setInputs({ ...Inputs, examInfo: updatedState });
   };
 
+  const handleRemoveTest = (ev, course, index) => {
+    ev.preventDefault();
+    const newData = JSON.parse(JSON.stringify(Inputs));
+    const filtered = newData.examInfo.filter(
+      (el, idx) => el !== course && index !== idx
+    );
+    setInputs({ ...Inputs, examInfo: filtered });
+  };
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
     Inputs.examInfo.forEach((elem) => {
@@ -142,18 +150,6 @@ const ExamForm = () => {
           window.alert("Error in submission! Please try again.");
         }
       });
-
-    // fetch("/send-tests", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(Inputs),
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
   };
 
   return (
@@ -195,19 +191,10 @@ const ExamForm = () => {
               </tr>
             </thead>
             {Inputs.examInfo.map((course, index) => {
-              // console.log(course);
               return (
                 <tbody key={index}>
                   <tr>
-                    <td>
-                      {/* <Label htmlFor="course">Course Code:</Label> */}
-                      {/* <Input
-                    id="course"
-                    maxLength="4"
-                    value={Inputs.examInfo[index].course}
-                    onChange={(ev) => handleCourseInput(ev, index)}
-                    required
-                  /> */}
+                    <td style={{ width: "200px" }}>
                       <Select
                         options={courseList}
                         value={{ label: Inputs.examInfo[index].course }}
@@ -215,14 +202,10 @@ const ExamForm = () => {
                         defaultValue={Inputs.examInfo[index].course}
                         required
                         isSearchable={true}
-                        // isLoading={true}
                         isClearable={true}
-                        // width="300px"
                       />
                     </td>
                     <td>
-                      {/* <Label>Exam Date</Label> */}
-                      {/* <br />{" "} */}
                       <Input
                         type="date"
                         value={Inputs.examInfo[index].examDate}
@@ -233,8 +216,6 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      {/* <Label>Test Start:</Label>
-                      <br />{" "} */}
                       <Input
                         value={Inputs.examInfo[index].startTime}
                         type="time"
@@ -245,8 +226,6 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      {/* <Label>Test End:</Label>
-                      <br />{" "} */}
                       <Input
                         type="time"
                         value={Inputs.examInfo[index].endTime}
@@ -257,8 +236,6 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      {/* <Label>Instructions</Label>
-                      <br />{" "} */}
                       <Textarea
                         rows="4"
                         cols="20"
@@ -268,8 +245,8 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      {/* <br />{" "} */}
                       <Button
+                        onClick={(ev) => handleRemoveTest(ev, course, index)}
                         style={{
                           visibility: index > 0 ? "visibile" : "hidden",
                         }}
@@ -377,14 +354,14 @@ const CourseContainer = styled.div`
   }
 `;
 
-const TestContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  /* padding: 10px; */
-  border-radius: 10px;
-  margin-left: 10px;
-  width: inherit;
-`;
+// const TestContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   /* padding: 10px; */
+//   border-radius: 10px;
+//   margin-left: 10px;
+//   width: inherit;
+// `;
 const Label = styled.label`
   color: #912338;
   font-size: 1.2em;
@@ -424,22 +401,22 @@ const Button = styled.button`
   margin: 10px;
 `;
 
-const H1 = styled.h1`
-  color: #912338;
-  font-size: 2em;
-  text-transform: none;
-  letter-spacing: 1px;
-  font-family: "Montserrat", sans-serif;
-  margin-bottom: 5px;
-`;
+// const H1 = styled.h1`
+//   color: #912338;
+//   font-size: 2em;
+//   text-transform: none;
+//   letter-spacing: 1px;
+//   font-family: "Montserrat", sans-serif;
+//   margin-bottom: 5px;
+// `;
 
-const H2 = styled.p`
-  color: #912338;
-  font-size: 1.2em;
-  text-transform: none;
-  letter-spacing: 1px;
-  font-family: "Montserrat", sans-serif;
-  margin-bottom: 5px;
-`;
+// const H2 = styled.p`
+//   color: #912338;
+//   font-size: 1.2em;
+//   text-transform: none;
+//   letter-spacing: 1px;
+//   font-family: "Montserrat", sans-serif;
+//   margin-bottom: 5px;
+// `;
 
 export default ExamForm;
