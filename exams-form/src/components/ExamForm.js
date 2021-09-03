@@ -311,7 +311,6 @@ const CourseContainer = styled.div`
   flex-direction: column;
   padding: 20px;
   border-radius: 10px;
-  margin-left: 10px;
   width: 100%;
   .table > thead > tr > t {
     /* border-bottom: none !important; */
@@ -394,19 +393,15 @@ const Textarea = styled.textarea`
 const Button = styled.button`
   width: fit-content;
   padding: 10px;
-  color: #7a1d2e;
-  background-color: white;
+  color: white;
+  background-color: #912338;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  margin: 10px;
-  border: 2px solid #7a1d2e;
+  margin: 5px;
   outline: none;
   transition: 0.2s;
-  border-radius: 5px;
-  font-weight: 550;
   &:hover {
     cursor: pointer;
-    color: white;
     background-color: #7a1d2e;
   }
 `;
