@@ -38,7 +38,7 @@ const ExamForm = () => {
     setInputs(emailValue);
   };
 
-  const handleAddTest = (ev, courseIndex) => {
+  const handleAddTest = (ev) => {
     ev.preventDefault();
     let newData = { ...Inputs };
     // console.log(courseIndex);
@@ -186,7 +186,7 @@ const ExamForm = () => {
                 <th>Exam date</th>
                 <th>Start time</th>
                 <th>End time</th>
-                <th>Instructions</th>
+                <th>Instructions or comments</th>
                 <th />
               </tr>
             </thead>

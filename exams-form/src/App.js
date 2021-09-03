@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import Confirmation from "./components/Confirmation";
@@ -6,6 +6,9 @@ import Home from "./components/Home";
 import GlobalStyles from "./GlobalStyles";
 
 const App = () => {
+  useEffect(() => {
+    document.title = "ACSD - Exams Information Form";
+  }, []);
   return (
     <Wrapper>
       <GlobalStyles />
