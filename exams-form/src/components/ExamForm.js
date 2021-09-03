@@ -394,11 +394,21 @@ const Textarea = styled.textarea`
 const Button = styled.button`
   width: fit-content;
   padding: 10px;
-  color: white;
-  background-color: #7a1d2e;
+  color: #7a1d2e;
+  background-color: white;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   margin: 10px;
+  border: 2px solid #7a1d2e;
+  outline: none;
+  transition: 0.2s;
+  border-radius: 5px;
+  font-weight: 550;
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #7a1d2e;
+  }
 `;
 
 // const H1 = styled.h1`
