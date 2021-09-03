@@ -4,26 +4,18 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useHistory } from "react-router-dom";
-// import { timeDurationCheck } from "./helpers/timecheck";
-import makeid from "./helpers/makeid";
 import courseList from "./helpers/courseList";
 import Select from "react-select";
 
 const ExamForm = () => {
   let resArray = [];
-  const [courseError, setCourseError] = useState(false);
   const history = useHistory();
-  const tests = {
+  const examDetails = {
+    course: "",
     examDate: "",
     startTime: "",
     endTime: "",
     instructions: "",
-  };
-  const examDetails = {
-    course: "",
-    // number: "",
-    // section: "",
-    testInfo: [tests],
   };
 
   const [Inputs, setInputs] = useState({
@@ -46,103 +38,97 @@ const ExamForm = () => {
     setInputs(emailValue);
   };
 
-  const handleAddCourse = (ev) => {
-    ev.preventDefault();
-    let newData = { ...Inputs };
-    newData.examInfo.push(examDetails);
-    console.log(newData);
-    setInputs(newData);
-  };
-
   const handleAddTest = (ev, courseIndex) => {
     ev.preventDefault();
     let newData = { ...Inputs };
     console.log(courseIndex);
-    newData.examInfo[courseIndex].testInfo.push(tests);
-    console.log(newData);
+    newData.examInfo.push(examDetails);
+    // console.log(newData);
     setInputs(newData);
   };
 
-  const handleCourseInput = (ev, courseIndex) => {
+  const handleCourseInput = (ev, index) => {
     if (ev) {
-      // console.log(ev);
-      let courseValues = { ...Inputs };
-      courseValues.examInfo[courseIndex].course = ev.label;
-      // console.log(courseValues);
-      setInputs(courseValues);
-    } else if (ev === null) {
-      // console.log(ev);
-      let courseValues = { ...Inputs };
-      courseValues.examInfo[courseIndex].course = "";
-      // console.log(courseValues);
-      setInputs(courseValues);
-      setCourseError(true);
+      const value = ev.label;
+      const updatedState = Inputs.examInfo.map((obj, idx) => {
+        if (idx === index) {
+          let newObj = { ...obj };
+          newObj.course = value;
+          return newObj;
+        }
+        return obj;
+      });
+      // console.log(updatedState)
+      setInputs({ ...Inputs, examInfo: updatedState });
     }
   };
 
-  // const handleNumberInput = (ev, courseIndex) => {
-  //   // console.log(ev.target.value, courseIndex);
-  //   let numberValues = { ...Inputs };
-  //   numberValues.examInfo[courseIndex].number = ev.target.value;
-  //   // console.log(courseValues);
-  //   setInputs(numberValues);
-  // };
-
-  // const handleSectionInput = (ev, courseIndex) => {
-  //   // console.log(ev.target.value, courseIndex);
-  //   let sectionValues = { ...Inputs };
-  //   sectionValues.examInfo[courseIndex].section = ev.target.value;
-  //   // console.log(courseValues);
-  //   setInputs(sectionValues);
-  // };
-
-  const handleDateUpdate = (ev, courseIndex, testIndex) => {
-    // console.log(ev.target.value, courseIndex, testIndex);
-    let dateValues = { ...Inputs };
-    dateValues.examInfo[courseIndex].testInfo[testIndex].examDate =
-      ev.target.value;
-    setInputs(dateValues);
+  const handleDateUpdate = (ev, index) => {
+    const { value } = ev.target;
+    const updatedState = Inputs.examInfo.map((obj, idx) => {
+      if (idx === index) {
+        let newObj = { ...obj };
+        newObj.examDate = value;
+        return newObj;
+      }
+      return obj;
+    });
+    setInputs({ ...Inputs, examInfo: updatedState });
   };
 
-  const handleStartTimeInput = (ev, courseIndex, testIndex) => {
-    let startTimeValues = { ...Inputs };
-    startTimeValues.examInfo[courseIndex].testInfo[testIndex].startTime =
-      ev.target.value;
-    setInputs(startTimeValues);
+  const handleStartTimeInput = (ev, index) => {
+    const { value } = ev.target;
+    const updatedState = Inputs.examInfo.map((obj, idx) => {
+      if (idx === index) {
+        let newObj = { ...obj };
+        newObj.startTime = value;
+        return newObj;
+      }
+      return obj;
+    });
+    setInputs({ ...Inputs, examInfo: updatedState });
   };
 
-  const handleEndTimeInput = (ev, courseIndex, testIndex) => {
-    let endTimeValues = { ...Inputs };
-    endTimeValues.examInfo[courseIndex].testInfo[testIndex].endTime =
-      ev.target.value;
-    setInputs(endTimeValues);
+  const handleEndTimeInput = (ev, index) => {
+    const { value } = ev.target;
+    const updatedState = Inputs.examInfo.map((obj, idx) => {
+      if (idx === index) {
+        let newObj = { ...obj };
+        newObj.endTime = value;
+        return newObj;
+      }
+      return obj;
+    });
+    setInputs({ ...Inputs, examInfo: updatedState });
   };
 
-  const handleInstructionsInput = (ev, courseIndex, testIndex) => {
-    // console.log(ev);
-    let instructionsValues = { ...Inputs };
-    instructionsValues.examInfo[courseIndex].testInfo[testIndex].instructions =
-      ev.target.value;
-    setInputs(instructionsValues);
+  const handleInstructionsInput = (ev, index) => {
+    const { value } = ev.target;
+    const updatedState = Inputs.examInfo.map((obj, idx) => {
+      if (idx === index) {
+        let newObj = { ...obj };
+        newObj.instructions = value;
+        return newObj;
+      }
+      return obj;
+    });
+    setInputs({ ...Inputs, examInfo: updatedState });
   };
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
     Inputs.examInfo.forEach((elem) => {
-      return elem.testInfo.forEach((el) => {
-        return resArray.push({
-          timestamp: new Date(Date.now()).toString(),
-          name: Inputs.name,
-          email: Inputs.email,
-          course: elem.course,
-          examDate: el.examDate,
-          startTime: el.startTime,
-          endTime: el.endTime,
-          instructions: el.instructions,
-        });
+      return resArray.push({
+        timestamp: new Date(Date.now()).toString(),
+        name: Inputs.name,
+        email: Inputs.email,
+        course: elem.course,
+        examDate: elem.examDate,
+        startTime: elem.startTime,
+        endTime: elem.endTime,
+        instructions: elem.instructions,
       });
     });
-    console.log(courseError);
 
     axios
       .post(
@@ -151,8 +137,7 @@ const ExamForm = () => {
       )
       .then((res) => {
         if (res.status === 200) {
-          // history.push("/confirmation");
-          setCourseError(false);
+          history.push("/confirmation");
         } else {
           window.alert("Error in submission! Please try again.");
         }
@@ -202,12 +187,11 @@ const ExamForm = () => {
           // console.log(course);
           return (
             <CourseContainer key={index}>
-              <H1>Course {index + 1}</H1>
+              <H1>Course</H1>
               <RowContainer>
                 <ColumnContainer style={{ width: "20%" }}>
                   <Label htmlFor="course">Course Code:</Label>
                   {/* <Input
-                    
                     id="course"
                     maxLength="4"
                     value={Inputs.examInfo[index].course}
@@ -226,48 +210,16 @@ const ExamForm = () => {
                     // width="300px"
                   />
                 </ColumnContainer>
-                {/* <ColumnContainer>
-                  <Label htmlFor="course" >
-                    Course Code:
-                  </Label>
-                  <Input
-                    
-                    id="course"
-                    maxLength="4"
-                    value={Inputs.examInfo[index].course}
-                    onChange={(ev) => handleCourseInput(ev, index)}
-                    required
-                  />
-                </ColumnContainer>
-                <ColumnContainer>
-                  <Label >Course Number:</Label>
-                  <Input
-                    
-                    maxLength="4"
-                    value={Inputs.examInfo[index].number}
-                    onChange={(ev) => handleNumberInput(ev, index)}
-                    required
-                  />
-                </ColumnContainer>
-                <ColumnContainer>
-                  <Label >Section:</Label>
-                  <Input
-                    
-                    maxLength="3"
-                    required
-                    value={Inputs.examInfo[index].section}
-                    onChange={(ev) => handleSectionInput(ev, index)}
-                  />
-                </ColumnContainer> */}
+
                 <ColumnContainer>
                   <br />
-                  <Button
+                  {/* <Button
                     style={{
                       visibility: index > 0 ? "visibile" : "hidden",
                     }}
                   >
                     Remove this course
-                  </Button>
+                  </Button> */}
                 </ColumnContainer>
               </RowContainer>
               <Table
@@ -285,93 +237,83 @@ const ExamForm = () => {
                   </tr>
                 </thead>
 
-                {course.testInfo.map((test, i) => {
-                  return (
-                    <TestContainer key={i}>
-                      <tr>
-                        <H2>Test {i + 1}</H2>
-                      </tr>
-                      <tr>
-                        <td>
-                          <Label>Exam Date</Label>
-                          <br />{" "}
-                          <Input
-                            type="date"
-                            value={Inputs.examInfo[index].testInfo[i].examDate}
-                            min={Date.now()}
-                            max="2030-12-31"
-                            onChange={(ev) => handleDateUpdate(ev, index, i)}
-                            required
-                          />
-                        </td>
-                        <td>
-                          <Label>Test Start:</Label>
-                          <br />{" "}
-                          <Input
-                            value={Inputs.examInfo[index].testInfo[i].startTime}
-                            type="time"
-                            min="07:00"
-                            max="24:00"
-                            onChange={(ev) =>
-                              handleStartTimeInput(ev, index, i)
-                            }
-                            required
-                          />
-                        </td>
-                        <td>
-                          <Label>Test End:</Label>
-                          <br />{" "}
-                          <Input
-                            type="time"
-                            value={Inputs.examInfo[index].testInfo[i].endTime}
-                            min="07:00"
-                            max="24:00"
-                            onChange={(ev) => handleEndTimeInput(ev, index, i)}
-                            required
-                          />
-                        </td>
-                        <td>
-                          <Label>Instructions</Label>
-                          <br />{" "}
-                          <Textarea
-                            rows="4"
-                            cols="30"
-                            placeholder="Exam instructions, formula sheet, open/close book etc."
-                            defaultValue={
-                              Inputs.examInfo[index].testInfo[i].instructions
-                            }
-                            onChange={(ev) =>
-                              handleInstructionsInput(ev, index, i)
-                            }
-                          />
-                        </td>
-                        <td>
-                          <br />{" "}
-                          <Button
-                            style={{
-                              visibility: i > 0 ? "visibile" : "hidden",
-                            }}
-                          >
-                            Remove test
-                          </Button>
-                        </td>
-                      </tr>
-                    </TestContainer>
-                  );
-                })}
+                <TestContainer>
+                  <tr>
+                    <H2>Test</H2>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Label>Exam Date</Label>
+                      <br />{" "}
+                      <Input
+                        type="date"
+                        value={Inputs.examInfo[index].examDate}
+                        min={Date.now()}
+                        max="2030-12-31"
+                        onChange={(ev) => handleDateUpdate(ev, index)}
+                        required
+                      />
+                    </td>
+                    <td>
+                      <Label>Test Start:</Label>
+                      <br />{" "}
+                      <Input
+                        value={Inputs.examInfo[index].startTime}
+                        type="time"
+                        min="07:00"
+                        max="24:00"
+                        onChange={(ev) => handleStartTimeInput(ev, index)}
+                        required
+                      />
+                    </td>
+                    <td>
+                      <Label>Test End:</Label>
+                      <br />{" "}
+                      <Input
+                        type="time"
+                        value={Inputs.examInfo[index].endTime}
+                        min="07:00"
+                        max="24:00"
+                        onChange={(ev) => handleEndTimeInput(ev, index)}
+                        required
+                      />
+                    </td>
+                    <td>
+                      <Label>Instructions</Label>
+                      <br />{" "}
+                      <Textarea
+                        rows="4"
+                        cols="30"
+                        placeholder="Exam instructions, formula sheet, open/close book etc."
+                        defaultValue={Inputs.examInfo[index].instructions}
+                        onChange={(ev) => handleInstructionsInput(ev, index)}
+                      />
+                    </td>
+                    <td>
+                      <br />{" "}
+                      <Button
+                        style={{
+                          visibility: index > 0 ? "visibile" : "hidden",
+                        }}
+                      >
+                        Remove test
+                      </Button>
+                    </td>
+                  </tr>
+                </TestContainer>
               </Table>
-              <Button
-                onClick={(ev) => handleAddTest(ev, index)}
-                style={{ marginLeft: "30px" }}
-              >
-                Add another test
-              </Button>
             </CourseContainer>
           );
         })}
-        <Button onClick={handleAddCourse} style={{ marginLeft: "40px" }}>
-          Add another course
+        <Button
+          onClick={(ev) => handleAddTest(ev)}
+          style={{ marginLeft: "30px" }}
+        >
+          Add another test
         </Button>
+        {/* <Button onClick={handleAddCourse} style={{ marginLeft: "40px" }}>
+          Add another course
+        </Button> */}
         <Button type="submit">Submit</Button>
       </Form>
     </Wrapper>
