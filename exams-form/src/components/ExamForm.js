@@ -182,69 +182,47 @@ const ExamForm = () => {
             />
           </ColumnContainer>
         </RowContainer>
-
-        {Inputs.examInfo.map((course, index) => {
-          // console.log(course);
-          return (
-            <CourseContainer key={index}>
-              <H1>Course</H1>
-              <RowContainer>
-                <ColumnContainer style={{ width: "20%" }}>
-                  <Label htmlFor="course">Course Code:</Label>
-                  {/* <Input
+        <CourseContainer>
+          <Table responsive="xl" size="sm" style={{ width: "100% !important" }}>
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Exam date</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th>Instructions</th>
+                <th />
+              </tr>
+            </thead>
+            {Inputs.examInfo.map((course, index) => {
+              // console.log(course);
+              return (
+                <tbody key={index}>
+                  <tr>
+                    <td>
+                      {/* <Label htmlFor="course">Course Code:</Label> */}
+                      {/* <Input
                     id="course"
                     maxLength="4"
                     value={Inputs.examInfo[index].course}
                     onChange={(ev) => handleCourseInput(ev, index)}
                     required
                   /> */}
-                  <Select
-                    options={courseList}
-                    value={{ label: Inputs.examInfo[index].course }}
-                    onChange={(ev) => handleCourseInput(ev, index)}
-                    defaultValue={Inputs.examInfo[index].course}
-                    required
-                    isSearchable={true}
-                    // isLoading={true}
-                    isClearable={true}
-                    // width="300px"
-                  />
-                </ColumnContainer>
-
-                <ColumnContainer>
-                  <br />
-                  {/* <Button
-                    style={{
-                      visibility: index > 0 ? "visibile" : "hidden",
-                    }}
-                  >
-                    Remove this course
-                  </Button> */}
-                </ColumnContainer>
-              </RowContainer>
-              <Table
-                responsive="xl"
-                size="sm"
-                style={{ width: "100% !important" }}
-              >
-                <thead>
-                  <tr>
-                    <th />
-                    <th />
-                    <th />
-                    <th />
-                    <th />
-                  </tr>
-                </thead>
-
-                <TestContainer>
-                  <tr>
-                    <H2>Test</H2>
-                  </tr>
-                  <tr>
+                      <Select
+                        options={courseList}
+                        value={{ label: Inputs.examInfo[index].course }}
+                        onChange={(ev) => handleCourseInput(ev, index)}
+                        defaultValue={Inputs.examInfo[index].course}
+                        required
+                        isSearchable={true}
+                        // isLoading={true}
+                        isClearable={true}
+                        // width="300px"
+                      />
+                    </td>
                     <td>
-                      <Label>Exam Date</Label>
-                      <br />{" "}
+                      {/* <Label>Exam Date</Label> */}
+                      {/* <br />{" "} */}
                       <Input
                         type="date"
                         value={Inputs.examInfo[index].examDate}
@@ -255,8 +233,8 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      <Label>Test Start:</Label>
-                      <br />{" "}
+                      {/* <Label>Test Start:</Label>
+                      <br />{" "} */}
                       <Input
                         value={Inputs.examInfo[index].startTime}
                         type="time"
@@ -267,8 +245,8 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      <Label>Test End:</Label>
-                      <br />{" "}
+                      {/* <Label>Test End:</Label>
+                      <br />{" "} */}
                       <Input
                         type="time"
                         value={Inputs.examInfo[index].endTime}
@@ -279,18 +257,18 @@ const ExamForm = () => {
                       />
                     </td>
                     <td>
-                      <Label>Instructions</Label>
-                      <br />{" "}
+                      {/* <Label>Instructions</Label>
+                      <br />{" "} */}
                       <Textarea
                         rows="4"
-                        cols="30"
+                        cols="20"
                         placeholder="Exam instructions, formula sheet, open/close book etc."
                         defaultValue={Inputs.examInfo[index].instructions}
                         onChange={(ev) => handleInstructionsInput(ev, index)}
                       />
                     </td>
                     <td>
-                      <br />{" "}
+                      {/* <br />{" "} */}
                       <Button
                         style={{
                           visibility: index > 0 ? "visibile" : "hidden",
@@ -300,11 +278,11 @@ const ExamForm = () => {
                       </Button>
                     </td>
                   </tr>
-                </TestContainer>
-              </Table>
-            </CourseContainer>
-          );
-        })}
+                </tbody>
+              );
+            })}
+          </Table>
+        </CourseContainer>
         <Button
           onClick={(ev) => handleAddTest(ev)}
           style={{ marginLeft: "30px" }}
@@ -358,8 +336,31 @@ const CourseContainer = styled.div`
   border-radius: 10px;
   margin-left: 10px;
   width: 100%;
+  .table > thead > tr > t {
+    /* border-bottom: none !important; */
+    border-top: none !important;
+  }
+  .table > tbody > tr > td,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > td,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
   .table > thead > tr > th {
-    border-bottom: none !important;
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: none !important;
+  }
+  .table > tbody + tbody {
+    border: none !important;
+  }
+  th {
+    color: #912338;
+    font-size: 1.25em;
+    text-transform: none;
+    letter-spacing: 1px;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 5px;
   }
   .table {
     width: 100% !important;
@@ -385,9 +386,12 @@ const TestContainer = styled.div`
   width: inherit;
 `;
 const Label = styled.label`
+  color: #912338;
+  font-size: 1.2em;
+  text-transform: none;
+  letter-spacing: 1px;
   font-family: "Montserrat", sans-serif;
-  padding: 5px 5px 5px 0px;
-  font-size: 1em;
+  margin-bottom: 5px;
 `;
 
 const Input = styled.input`
@@ -431,7 +435,7 @@ const H1 = styled.h1`
 
 const H2 = styled.p`
   color: #912338;
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-transform: none;
   letter-spacing: 1px;
   font-family: "Montserrat", sans-serif;

@@ -1,3 +1,5 @@
 https://www.freecodecamp.org/news/react-and-googlesheets/
 
 link for google sheets api
+
+https://stackoverflow.com/questions/47624142/right-way-to-clone-objects-arrays-during-setstate-in-react
