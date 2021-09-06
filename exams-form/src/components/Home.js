@@ -10,7 +10,6 @@ const Home = () => {
       {" "}
       <Title />
       <ExamForm />
-      <Confirmation />
     </Wrapper>
   );
 };
