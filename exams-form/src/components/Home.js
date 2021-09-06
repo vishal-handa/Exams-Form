@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Confirmation from "./Confirmation";
 import ExamForm from "./ExamForm";
 import Title from "./Title";
 
