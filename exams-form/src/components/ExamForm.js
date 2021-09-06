@@ -9,6 +9,7 @@ import Select from "react-select";
 
 const ExamForm = () => {
   const apiLink = process.env.REACT_APP_DRIVE;
+  console.log(apiLink);
   let resArray = [];
   const history = useHistory();
   const examDetails = {
