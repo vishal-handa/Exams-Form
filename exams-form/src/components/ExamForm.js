@@ -8,6 +8,7 @@ import courseList from "./helpers/courseList";
 import Select from "react-select";
 
 const ExamForm = () => {
+  const apiLink = process.env.REACT_APP_DRIVE;
   let resArray = [];
   const history = useHistory();
   const examDetails = {
@@ -138,18 +139,13 @@ const ExamForm = () => {
       });
     });
 
-    axios
-      .post(
-        "https://sheet.best/api/sheets/f1a3d643-ae9e-4a02-83ee-5e7cd9ef546e",
-        resArray
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          history.push("/confirmation");
-        } else {
-          window.alert("Error in submission! Please try again.");
-        }
-      });
+    axios.post(apiLink, resArray).then((res) => {
+      if (res.status === 200) {
+        history.push("/confirmation");
+      } else {
+        window.alert("Error in submission! Please try again.");
+      }
+    });
   };
 
   return (
