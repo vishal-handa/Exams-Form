@@ -28,23 +28,19 @@ const ExamForm = () => {
   const handleNameInput = (ev) => {
     let nameValue = { ...Inputs };
     nameValue.name = ev.target.value;
-    // console.log(courseValues);
     setInputs(nameValue);
   };
 
   const handleEmailInput = (ev) => {
     let emailValue = { ...Inputs };
     emailValue.email = ev.target.value;
-    // console.log(courseValues);
     setInputs(emailValue);
   };
 
   const handleAddTest = (ev) => {
     ev.preventDefault();
     let newData = { ...Inputs };
-    // console.log(courseIndex);
     newData.examInfo.push(examDetails);
-    // console.log(newData);
     setInputs(newData);
   };
 
@@ -55,6 +51,16 @@ const ExamForm = () => {
         if (idx === index) {
           let newObj = { ...obj };
           newObj.course = value;
+          return newObj;
+        }
+        return obj;
+      });
+      setInputs({ ...Inputs, examInfo: updatedState });
+    } else if (ev === null) {
+      const updatedState = Inputs.examInfo.map((obj, idx) => {
+        if (idx === index) {
+          let newObj = { ...obj };
+          newObj.course = "";
           return newObj;
         }
         return obj;
@@ -265,9 +271,6 @@ const ExamForm = () => {
         >
           Add another test
         </Button>
-        {/* <Button onClick={handleAddCourse} style={{ marginLeft: "40px" }}>
-          Add another course
-        </Button> */}
         <Button type="submit">Submit</Button>
       </Form>
     </Wrapper>
@@ -277,8 +280,6 @@ const ExamForm = () => {
 const Wrapper = styled.div`
   padding: 1rem;
   background-color: white;
-  /* border-left: 0.25px solid gray;
-  border-right: 0.25px solid gray; */
 `;
 
 const Form = styled.form`
@@ -291,10 +292,6 @@ const ColumnContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   margin-inline-end: 20px;
-  /* :nth-child(4) {
-    position: relative;
-    right: 0;
-  } */
 `;
 
 const RowContainer = styled.div`
@@ -317,7 +314,6 @@ const CourseContainer = styled.div`
     width: 500px;
   }
   .table > thead > tr > t {
-    /* border-bottom: none !important; */
     border-top: none !important;
   }
   .table > tbody > tr > td,
@@ -363,14 +359,6 @@ const CourseContainer = styled.div`
   }
 `;
 
-// const TestContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   /* padding: 10px; */
-//   border-radius: 10px;
-//   margin-left: 10px;
-//   width: inherit;
-// `;
 const Label = styled.label`
   color: #912338;
   font-size: 1.2em;
@@ -382,7 +370,6 @@ const Label = styled.label`
 
 const Input = styled.input`
   width: 50%;
-  /* margin: 10px; */
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
   padding: 5px;
@@ -415,23 +402,5 @@ const Button = styled.button`
     background-color: #7a1d2e;
   }
 `;
-
-// const H1 = styled.h1`
-//   color: #912338;
-//   font-size: 2em;
-//   text-transform: none;
-//   letter-spacing: 1px;
-//   font-family: "Montserrat", sans-serif;
-//   margin-bottom: 5px;
-// `;
-
-// const H2 = styled.p`
-//   color: #912338;
-//   font-size: 1.2em;
-//   text-transform: none;
-//   letter-spacing: 1px;
-//   font-family: "Montserrat", sans-serif;
-//   margin-bottom: 5px;
-// `;
 
 export default ExamForm;
