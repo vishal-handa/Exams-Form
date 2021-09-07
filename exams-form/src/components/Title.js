@@ -4,24 +4,37 @@ import styled from "styled-components";
 const Title = () => {
   return (
     <Wrapper>
-      <h1>Exam INFORMATION Form for ACSD</h1>
-      <p>This form gathers high level information for all in-person exams.</p>
+      <H1>
+        Access Center for Students with Disabilities - Exam Information Form
+      </H1>
+      <p>
+        This form gathers high level information for all in-person midterms,
+        exams or quizzes.
+      </p>
 
       <p>
         Please complete this Exam Information Form by 10 days before each exam.
-        If you have missed this date, please contact acsdexam@concordia.ca to
+        If you have missed this date, please contact{" "}
+        <a href="mailto:acsdexam@concordia.ca">acsdexam@concordia.ca</a> to
         check if the exam can be accommodated.
+      </p>
+
+      <p>
+        DO NOT fill this form if your exam, midterm or quiz is on COLE, moodle,
+        eConcordia or on any other online platform.
       </p>
 
       <p>
         Whenever you are ready, and at least 10 days before your exam, you must
         NECESSARILY complete the Exam Upload Form, with specific details of your
-        exam. (http://bit.ly/ColeEUF)
+        exam.
       </p>
 
       <p>
         If, after completing this form, your exam dates or exam information
-        changes, please contact acsdexam@concordia.ca as early as possible.
+        changes, please contact{" "}
+        <a href="mailto:acsdexam@concordia.ca">acsdexam@concordia.ca</a> as
+        early as possible.
       </p>
     </Wrapper>
   );
@@ -30,7 +43,8 @@ const Title = () => {
 const Wrapper = styled.div`
   background-color: #93243b;
   color: white;
-  p {
+  p,
+  a {
     color: white;
     line-height: 2;
     font-family: "Montserrat", sans-serif;
@@ -39,7 +53,19 @@ const Wrapper = styled.div`
   h2 {
     font-family: "Montserrat", sans-serif;
   }
+  a {
+    text-decoration: underline;
+  }
   padding: 1rem;
+`;
+
+const H1 = styled.h1`
+  color: white;
+  font-size: 2em;
+  text-transform: none;
+  letter-spacing: 1px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 5px;
 `;
 
 export default Title;
