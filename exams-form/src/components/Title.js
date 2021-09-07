@@ -26,8 +26,8 @@ const Title = () => {
 
       <p>
         Whenever you are ready, and at least 10 days before your exam, you must
-        NECESSARILY complete the Exam Upload Form, with specific details of your
-        exam.
+        NECESSARILY complete this form in order to have your exams booked with
+        ACSD.
       </p>
 
       <p>
