@@ -146,6 +146,7 @@ const ExamForm = () => {
         window.alert("Error in submission! Please try again.");
       }
     }).catch = (err) => {
+      window.alert("Error in submission! Please try again.");
       console.log(err);
     };
   };
@@ -192,7 +193,7 @@ const ExamForm = () => {
               return (
                 <tbody key={index}>
                   <tr>
-                    <td style={{ width: "200px" }}>
+                    <td>
                       <Select
                         options={courseList}
                         value={{ label: Inputs.examInfo[index].course }}
@@ -310,6 +311,11 @@ const CourseContainer = styled.div`
   padding: 20px;
   border-radius: 10px;
   width: 100%;
+
+  .Select-input {
+    overflow: hidden;
+    width: 500px;
+  }
   .table > thead > tr > t {
     /* border-bottom: none !important; */
     border-top: none !important;
@@ -348,6 +354,12 @@ const CourseContainer = styled.div`
   thead {
     border: none;
     outline: none;
+  }
+  td,
+  th {
+    &:nth-child(1) {
+      min-width: 200px !important;
+    }
   }
 `;
 
