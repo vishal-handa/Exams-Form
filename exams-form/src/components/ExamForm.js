@@ -358,7 +358,7 @@ const CourseContainer = styled.div`
   td,
   th {
     &:nth-child(1) {
-      min-width: 200px !important;
+      min-width: 220px !important;
     }
   }
 `;
