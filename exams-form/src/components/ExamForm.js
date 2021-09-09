@@ -130,14 +130,20 @@ const ExamForm = () => {
     setInputs({ ...Inputs, examInfo: filtered });
   };
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
-    Inputs.examInfo.forEach((elem) => {
+    let errorCheck = false;
+    await Inputs.examInfo.forEach((elem) => {
       return resArray.push({
         timestamp: new Date(Date.now()).toString(),
         name: Inputs.name,
         email: Inputs.email,
-        course: elem.course,
+        course:
+          elem.course === "" ||
+          elem.course === null ||
+          elem.course === undefined
+            ? (errorCheck = true)
+            : elem.course,
         examDate: elem.examDate,
         startTime: elem.startTime,
         endTime: elem.endTime,
@@ -145,16 +151,33 @@ const ExamForm = () => {
       });
     });
 
-    axios.post(apiLink, resArray).then((res) => {
-      if (res.status === 200) {
-        history.push("/confirmation");
-      } else {
+    if (errorCheck === true) {
+      window.alert(
+        "Error in submission: Please make sure that all the courses are selected properly. "
+      );
+    } else {
+      axios.post(apiLink, resArray).then((res) => {
+        if (res.status === 200) {
+          history.push("/confirmation");
+        } else {
+          window.alert("Error in submission! Please try again.");
+        }
+      }).catch = (err) => {
         window.alert("Error in submission! Please try again.");
-      }
-    }).catch = (err) => {
-      window.alert("Error in submission! Please try again.");
-      console.log(err);
-    };
+        console.log(err);
+      };
+    }
+
+    // axios.post(apiLink, resArray).then((res) => {
+    //   if (res.status === 200) {
+    //     history.push("/confirmation");
+    //   } else {
+    //     window.alert("Error in submission! Please try again.");
+    //   }
+    // }).catch = (err) => {
+    //   window.alert("Error in submission! Please try again.");
+    //   console.log(err);
+    // };
   };
 
   return (
