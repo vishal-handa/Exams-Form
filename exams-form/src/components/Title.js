@@ -13,8 +13,8 @@ const Title = () => {
       </p>
 
       <p>
-        Please complete this Exam Information Form by 10 days before each exam.
-        If you have missed this date, please contact{" "}
+        Please complete this Exam Information Form at least 10 days before each
+        exam. If your exam is in less than 10 days, please contact{" "}
         <a href="mailto:acsdexam@concordia.ca">acsdexam@concordia.ca</a> to
         check if the exam can be accommodated.
       </p>
@@ -35,6 +35,10 @@ const Title = () => {
         changes, please contact{" "}
         <a href="mailto:acsdexam@concordia.ca">acsdexam@concordia.ca</a> as
         early as possible.
+      </p>
+      <p>
+        DO NOT fill out this form for Final exams, we will receive that
+        information from the exams office.
       </p>
     </Wrapper>
   );
