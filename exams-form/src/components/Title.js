@@ -38,7 +38,7 @@ const Title = () => {
       </p>
       <p>
         DO NOT fill out this form for Final exams, we will receive that
-        information from the exams office.
+        information from the Exams Office.
       </p>
     </Wrapper>
   );
