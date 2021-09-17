@@ -24,11 +24,11 @@ const Title = () => {
         eConcordia or on any other online platform.
       </p>
 
-      <p>
+      {/* <p>
         Whenever you are ready, and at least 10 days before your exam, you must
         NECESSARILY complete this form in order to have your exams booked with
         ACSD.
-      </p>
+      </p> */}
 
       <p>
         If, after completing this form, your exam dates or exam information
